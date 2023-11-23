@@ -2,7 +2,13 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const jwt = require('jsonwebtoken')
+const cors = require('cors');
 const redis = require('redis');
+
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
 
 async function connectRedis() {
   try {
@@ -53,6 +59,7 @@ app.post('/login', async (req, res) => {
   // Authenticate User
 
   const username = req.body.username
+  console.log(req.body)
   const user = { name: username }
 
   const accessToken = generateAccessToken(user)
