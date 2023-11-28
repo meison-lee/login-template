@@ -1,2 +1,4 @@
 # login-template
-a login implementation 
+
+implementation for JWT authentication
+also done auto-login when user have a valid access_token
