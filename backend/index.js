@@ -31,6 +31,7 @@ connectRedis();
 
 app.use(express.json())
 
+// get a new access token by your refresh token
 app.post('/token', async (req, res) => {
   const refreshToken = req.body.token
   if (refreshToken == null) return res.sendStatus(401)
@@ -42,8 +43,26 @@ app.post('/token', async (req, res) => {
 
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
     if (err) return res.sendStatus(403)
-    const accessToken = generateAccessToken({ name: user.name })
+    const accessToken = generateAccessToken(user)
     res.json({ accessToken: accessToken })
+  })
+})
+
+app.post('/validate', async (req, res) => {
+  const access_token = req.body.token
+  if (access_token == null) return res.status(401)
+  console.log(access_token)
+  // Check if token exists in Redis
+
+  jwt.verify(access_token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) {
+      console.log(err)
+      return res.status(403)
+    }
+    if (!user) return res.status(403)
+    console.log("in validate", user)
+
+    return res.status(200).json({valid: true})
   })
 })
 
@@ -60,7 +79,7 @@ app.post('/login', async (req, res) => {
 
   const username = req.body.username
   console.log(req.body)
-  const user = { name: username }
+  const user = { name: username, exp: Math.floor(Date.now() / 1000) + 60*60}
 
   const accessToken = generateAccessToken(user)
   const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
