@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
-import Blog from './components/Blog';
+import Chat from './components/Chat';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -14,7 +14,7 @@ function App() {
         <Route path="/"  element={<Home/>} />
         <Route path="/login" element={<Login/>} />
         <Route element={<ProtectedRoute />}>
-          <Route path="/blog" element={<Blog />} />
+          <Route path="/chat" element={<Chat />} />
         </Route>
       </Routes>
     </Router>

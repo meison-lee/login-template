@@ -10,7 +10,7 @@ function Navbar() {
       <Link to="/">Home</Link>
       {isAuthenticated ? (
         <>
-          <Link to="/blog">Blog</Link>
+          <Link to="/chat">Chat</Link>
           <button onClick={logout}>Logout</button>
         </>
       ) : (

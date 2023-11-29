@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate} from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
-import Blog from './Blog';
+import Chat from './Chat';
 import { validateToken } from './validation';
 
 function Login() {
@@ -38,7 +38,7 @@ function Login() {
     .then(data => {
       console.log('Success:', data.accessToken);
       login(data.accessToken, data.refreshToken);
-      navigate('/blog')
+      navigate('/chat')
     })
     .catch(error => {
       // Handle errors
@@ -48,7 +48,7 @@ function Login() {
   };
 
   return (
-    isAuthenticated? <Blog/>:
+    isAuthenticated? <Chat/>:
     <div>
       <form onSubmit={handleSubmit}>
         <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
