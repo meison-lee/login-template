@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors');
 require('./DB/redisClient')
+require('./DB/mongo')
 const checkAuthenticated = require('./auth')
 
 app.use(cors({
